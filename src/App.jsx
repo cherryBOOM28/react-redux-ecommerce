@@ -13,7 +13,7 @@ const App = () => {
     <div>
       <Header onToggleCart={toggleCart} />
       <ProductGrid />
-      <CartSidebar isOpem={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   )
 }

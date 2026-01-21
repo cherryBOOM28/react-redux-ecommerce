@@ -23,7 +23,10 @@ const CartSidebar = ({ isOpen, onClose }) => {
             <BiShoppingBag className="w-6 h-6" />
             <span>Shopping cart</span>
           </h2>
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200" onClick={onClose}>
+          <button
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+            onClick={onClose}
+          >
             <BiX className="w-6 h-6" />
           </button>
         </div>
