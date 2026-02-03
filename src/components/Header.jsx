@@ -1,6 +1,12 @@
 import { BiCart } from 'react-icons/bi'
+import { useSelector } from 'react-redux'
 
 const Header = ({ onToggleCart }) => {
+  const selectTotalItems = (state) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0)
+
+  const totalItems = useSelector(selectTotalItems)
+
   return (
     <div className="bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-200/50 sticky top-0 z-40 py-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,9 +26,11 @@ const Header = ({ onToggleCart }) => {
             onClick={onToggleCart}
           >
             <BiCart className="w-6 h-6" />
-            <span className="absolute -top-2 -right-2 bg-violet-500 text-white text-xs font-semibold rounded-full w-6 h-6 flex items-center justify-center">
-              1
-            </span>
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-violet-500 text-white text-xs font-semibold rounded-full w-6 h-6 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
           </button>
         </div>
       </div>

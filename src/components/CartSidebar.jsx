@@ -1,7 +1,16 @@
 import { BiShoppingBag, BiX } from 'react-icons/bi'
 import { CgCreditCard } from 'react-icons/cg'
+import { useDispatch, useSelector } from 'react-redux'
+import CartItem from './CartItem'
 
 const CartSidebar = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch()
+  const items = useSelector((state) => state.cart.items)
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0)
+  const totalPrice = items
+    .reduce((total, item) => total + item.price * item.quantity, 0)
+    .toFixed(2)
+
   return (
     <>
       {/* Backdrop */}
@@ -31,15 +40,23 @@ const CartSidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Cart Itmes */}
+        {/* Cart Items */}
         <div className="flex-1 overflow-y-auto p-6">
-          <div className="text-center py-12">
-            <BiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg mb-2">Your cart is empty</p>
-            <p className="text-gray-500 text-sm">
-              Add some products to get started
-            </p>
-          </div>
+          {items.length === 0 ? (
+            <div className="text-center py-12">
+              <BiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 text-lg mb-2">Your cart is empty</p>
+              <p className="text-gray-500 text-sm">
+                Add some products to get started
+              </p>
+            </div>
+          ) : (
+            <div className='space-y-4'>
+              {items.map((item) => {
+                return <CartItem key={item.id} item={item} />
+              })}
+            </div>
+          )}
         </div>
 
         {/* Footer */}
