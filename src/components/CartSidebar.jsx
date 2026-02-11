@@ -2,6 +2,7 @@ import { BiShoppingBag, BiX } from 'react-icons/bi'
 import { CgCreditCard } from 'react-icons/cg'
 import { useDispatch, useSelector } from 'react-redux'
 import CartItem from './CartItem'
+import { clearCart } from '../store/cartSlice'
 
 const CartSidebar = ({ isOpen, onClose }) => {
   const dispatch = useDispatch()
@@ -10,6 +11,10 @@ const CartSidebar = ({ isOpen, onClose }) => {
   const totalPrice = items
     .reduce((total, item) => total + item.price * item.quantity, 0)
     .toFixed(2)
+
+  const handleClearCart = () => {
+    dispatch(clearCart())
+  }
 
   return (
     <>
@@ -51,7 +56,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
               </p>
             </div>
           ) : (
-            <div className='space-y-4'>
+            <div className="space-y-4">
               {items.map((item) => {
                 return <CartItem key={item.id} item={item} />
               })}
@@ -60,23 +65,28 @@ const CartSidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="border-t border-gray-200 p-6 bg-gray-50">
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-lg font-semibold text-gray-900">Total</span>
-            <span className="flex-2xl font-bold text-gray-900">
-              Total price
-            </span>
+        {items.length > 0 && (
+          <div className="border-t border-gray-200 p-6 bg-gray-50">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-lg font-semibold text-gray-900">Total</span>
+              <span className="flex-2xl font-bold text-gray-900">
+                ${totalPrice}
+              </span>
+            </div>
+            <div className="space-y-3">
+              <button className="w-full bg-gray-600 text-white py-3 rounded-lg font-medium flex items-center justify-center space-x-2 hover:bg-gray-700 transition-all duration-200 hover:scale-105 cursor-pointer">
+                <CgCreditCard className="w-5" />
+                <span>Proceed to checkout</span>
+              </button>
+              <button
+                className="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all duration-200 hover:scale-105 cursor-pointer"
+                onClick={handleClearCart}
+              >
+                <span>Clear cart</span>
+              </button>
+            </div>
           </div>
-          <div className="space-y-3">
-            <button className="w-full bg-gray-600 text-white py-3 rounded-lg font-medium flex items-center justify-center space-x-2 hover:bg-gray-700 transition-all duration-200 hover:scale-105 cursor-pointer">
-              <CgCreditCard className="w-5" />
-              <span>Proceed to checkout</span>
-            </button>
-            <button className="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all duration-200 hover:scale-105 cursor-pointer">
-              <span>Clear cart</span>
-            </button>
-          </div>
-        </div>
+        )}
       </div>
     </>
   )

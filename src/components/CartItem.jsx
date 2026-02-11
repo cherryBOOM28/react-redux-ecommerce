@@ -26,18 +26,29 @@ const CartItem = ({ item }) => {
         <p>{item.price}</p>
       </div>
       <div className="flex items-center space-x-2">
-        <button className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-200 cursor-pointer">
+        <button
+          className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-200 cursor-pointer"
+          onClick={() => handleQtyChange(item.quantity - 1)}
+        >
           <BiMinus className="w-4 h-4" />
         </button>
         <span className="w-8 text-center font-medium">{item.quantity}</span>
-        <button className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-color duration-200 cursor-pointer">
+        <button
+          className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-color duration-200 cursor-pointer"
+          onClick={() => handleQtyChange(item.quantity + 1)}
+        >
           <PiPlus className="w-4 h-4" />
         </button>
       </div>
 
       <div className="flex items-center space-x-2">
-        <span className="font-bold text-gray">${item.price * item.quantity}</span>
-        <button className="p-1 rounded-full text-red-500 hover:bg-red-50 transition-color duration-200 cursor-pointer">
+        <span className="font-bold text-gray">
+          ${item.price * item.quantity}
+        </span>
+        <button
+          className="p-1 rounded-full text-red-500 hover:bg-red-50 transition-color duration-200 cursor-pointer"
+          onClick={handleRemoveItem}
+        >
           <TbTrash className="w-4 h-4" />
         </button>
       </div>
